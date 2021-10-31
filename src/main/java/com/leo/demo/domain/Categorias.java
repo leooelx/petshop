@@ -1,27 +1,34 @@
 package com.leo.demo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import antlr.collections.List;
+
 @Entity
-public class Categoria implemets Serializable {
+public class Categorias implements Serializable {
 	
-	private static final log seriaLVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	public Categoria() {
+	@ManyToMany(mappedBy = "categorias")
+	private List<Produto> produtos = new ArrayList<>();
+	
+	public Categorias() {
 		
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Categorias(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -60,6 +67,11 @@ public class Categoria implemets Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public java.util.List<Produto> getProdutos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
