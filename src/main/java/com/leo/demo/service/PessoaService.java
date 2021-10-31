@@ -32,15 +32,6 @@ public class PessoaService {
 		return repo.save(obj);
 	}	
 	
-	public void delete(Integer id) {
-		find(id);		
-		try {
-			repo.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Pessoa não pode ser deletada!");
-		}		
-	}
-
 	public List<Pessoa> findAll() {		
 		return repo.findAll();
 	}

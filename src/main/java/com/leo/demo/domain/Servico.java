@@ -33,6 +33,14 @@ public class Servico implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "servico")
 	private Pagamento pagamento;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_cliente")
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_funcionario")
+	private Funcionario funcionario;
+	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_pet")
@@ -48,12 +56,14 @@ public class Servico implements Serializable{
 		
 	}
 
-	public Servico(Integer id, Date dataEntrada, Date dataSaida, String descricao, Pet pet) {
+	public Servico(Integer id, Date dataEntrada, Date dataSaida, String descricao, Cliente cliente, Funcionario funcionario, Pet pet) {
 		super();
 		this.id = id;
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;
 		this.descricao = descricao;		
+		this.cliente = cliente;
+		this.funcionario = funcionario;
 		this.pet = pet;
 	}
 	
@@ -130,6 +140,21 @@ public class Servico implements Serializable{
 		this.pet = pet;
 	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
 	public List<Produto> getProdutos() {
 		return produtos;

@@ -16,17 +16,24 @@ import com.leo.demo.domain.Endereco;
 import com.leo.demo.domain.Especie;
 import com.leo.demo.domain.Estado;
 import com.leo.demo.domain.Funcionario;
+import com.leo.demo.domain.PagCartao;
+import com.leo.demo.domain.PagDinheiro;
+import com.leo.demo.domain.Pagamento;
 import com.leo.demo.domain.Pet;
 import com.leo.demo.domain.Produto;
 import com.leo.demo.domain.Raca;
+import com.leo.demo.domain.Servico;
+import com.leo.demo.domain.enuns.SituacaoPagamento;
 import com.leo.demo.repository.CategoriaRepository;
 import com.leo.demo.repository.CidadeRepository;
 import com.leo.demo.repository.EnderecoRepository;
 import com.leo.demo.repository.ProdutoRepository;
 import com.leo.demo.repository.EspecieRepository;
 import com.leo.demo.repository.EstadoRepository;
+import com.leo.demo.repository.PagamentoRepository;
 import com.leo.demo.repository.PessoaRepository;
 import com.leo.demo.repository.RacaRepository;
+import com.leo.demo.repository.ServicoRepository;
 import com.leo.demo.repository.PetRepository;
 
 @Component
@@ -58,6 +65,12 @@ public class PopulaDados {
 	
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	ServicoRepository servicoRepository;
+	
+	@Autowired
+	PagamentoRepository pagamentoRepository;
 	
 	@PostConstruct
 	public void cadastrar() {
@@ -125,6 +138,30 @@ public class PopulaDados {
 		
 		pessoaRepository.saveAll(Arrays.asList(clt1, fnc1));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
+		
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Servico srv1 = new Servico(null, sdf.parse("02/09/2021 09:00"), sdf.parse("02/09/2021 12:00"), "Tosa", clt1, fnc1, pet1);
+		Servico srv2 = new Servico(null, sdf.parse("03/09/2021 12:00"), sdf.parse("04/09/2021 12:00"), "Hotel", clt1, fnc1, pet2);
+		Servico srv3 = new Servico(null, sdf.parse("05/09/2021 16:00"), sdf.parse("05/09/2021 16:30"), "Vermifugação", clt1, fnc1, pet3);
+		
+		Pagamento pgt1 = new PagCartao(null, 60.00, SituacaoPagamento.QUITADO,srv2, 6);
+		srv2.setPagamento(pgt1);
+		
+		Pagamento pgt2 = new PagDinheiro(null, 100.00, SituacaoPagamento.PENDENTE, srv1, sdf.parse("02/09/2021 00:00"), null);
+		srv1.setPagamento(pgt2);
+		
+		Pagamento pgt3 = new PagDinheiro(null, 75.00, SituacaoPagamento.QUITADO, srv3, sdf.parse("05/09/2021 16:30"), null);
+		srv3.setPagamento(pgt3);
+		
+		clt1.getServicos().addAll(Arrays.asList(srv1, srv2));
+		fnc1.getServicos().addAll(Arrays.asList(srv1, srv2));
+		
+		srv2.getProdutos().addAll(Arrays.asList(p1, p2, p4));
+		srv3.getProdutos().addAll(Arrays.asList(p3));
+		
+		servicoRepository.saveAll(Arrays.asList(srv1, srv2, srv3));
+		pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2, pgt3));
 		
 	}
 
