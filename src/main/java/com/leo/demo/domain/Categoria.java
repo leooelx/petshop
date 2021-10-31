@@ -2,17 +2,17 @@ package com.leo.demo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
-import antlr.collections.List;
 
 @Entity
-public class Categorias implements Serializable {
+public class Categoria implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -24,22 +24,25 @@ public class Categorias implements Serializable {
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
-	public Categorias() {
+	public Categoria() {
 		
 	}
 
-	public Categorias(Integer id, String nome) {
+	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 	
 	
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nome);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,8 +52,13 @@ public class Categorias implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorias other = (Categorias) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
+		Categoria other = (Categoria) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 	public Integer getId() {

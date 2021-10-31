@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.leo.demo.domain.Categorias;
+import com.leo.demo.domain.Categoria;
 import com.leo.demo.domain.Produto;
 import com.leo.demo.repository.CategoriaRepository;
 import com.leo.demo.repository.ProdutoRepository;
@@ -24,9 +24,9 @@ public class PopulaDados {
 	@PostConstruct
 	public void cadastrar() {
 		
-		Categorias cat1 = new Categorias(null, "Alimento");
-		Categorias cat2 = new Categorias(null, "Cosmético");
-		Categorias cat3 = new Categorias(null, "Remédio");
+		Categoria cat1 = new Categoria(null, "Alimento");
+		Categoria cat2 = new Categoria(null, "Cosmético");
+		Categoria cat3 = new Categoria(null, "Remédio");
 		
 		Produto p1 = new Produto(null, "Ração", 100.0);
 		Produto p2 = new Produto(null, "Sache", 80.0);
