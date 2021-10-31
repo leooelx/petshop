@@ -13,36 +13,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Pet implements Serializable{
+public class Cidade implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private  Integer id;
+	private Integer id;
 	private String nome;
-	private Integer idade;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_especie")
-	private Especie especie;
+	@JoinColumn(name = "id_estado")
+	private Estado estado;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_raca")
-	private Raca raca;
-
+	@OneToMany(mappedBy = "cidade")
+	private List<Endereco> enderecos = new ArrayList<>();
 	
-	public Pet() {
+	public Cidade() {
 		
 	}
 
-	public Pet(Integer id, String nome, Integer idade, Especie especie, Raca raca) {
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.idade = idade;
-		this.especie = especie;
-		this.raca = raca;
+		this.estado = estado;
 	}
 
 	@Override
@@ -61,7 +56,7 @@ public class Pet implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pet other = (Pet) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -86,28 +81,11 @@ public class Pet implements Serializable{
 		this.nome = nome;
 	}
 
-	public Integer getIdade() {
-		return idade;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setIdade(Integer idade) {
-		this.idade = idade;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
-
-	public Especie getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(Especie especie) {
-		this.especie = especie;
-	}
-
-	public Raca getRaca() {
-		return raca;
-	}
-
-	public void setRaca(Raca raca) {
-		this.raca = raca;
-	}		
-	
 }

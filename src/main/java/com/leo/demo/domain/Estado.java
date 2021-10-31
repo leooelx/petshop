@@ -8,41 +8,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Pet implements Serializable{
+public class Estado implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private  Integer id;
+	private Integer id;
 	private String nome;
-	private Integer idade;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_especie")
-	private Especie especie;
+	@JsonIgnore
+	@OneToMany(mappedBy = "estado")
+	List<Cidade> cidades = new ArrayList<>();
 	
-	@ManyToOne
-	@JoinColumn(name = "id_raca")
-	private Raca raca;
-
 	
-	public Pet() {
+	public Estado() {
 		
 	}
-
-	public Pet(Integer id, String nome, Integer idade, Especie especie, Raca raca) {
+	
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.idade = idade;
-		this.especie = especie;
-		this.raca = raca;
 	}
 
 	@Override
@@ -61,7 +53,7 @@ public class Pet implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pet other = (Pet) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,29 +77,13 @@ public class Pet implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Integer getIdade() {
-		return idade;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setIdade(Integer idade) {
-		this.idade = idade;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
-	public Especie getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(Especie especie) {
-		this.especie = especie;
-	}
-
-	public Raca getRaca() {
-		return raca;
-	}
-
-	public void setRaca(Raca raca) {
-		this.raca = raca;
-	}		
 	
 }
