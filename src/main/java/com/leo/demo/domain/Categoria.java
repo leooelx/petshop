@@ -3,7 +3,7 @@ package com.leo.demo.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Categorias implemets Serializable {
+public class Categoria implemets Serializable {
 	
 	private static final log seriaLVersionUID = 1L;
 	
@@ -14,7 +14,7 @@ public class Categorias implemets Serializable {
 		
 	}
 
-	public Categorias(Integer id, String nome) {
+	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
